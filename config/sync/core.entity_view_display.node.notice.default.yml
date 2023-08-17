@@ -1,0 +1,28 @@
+uuid: f8b126c1-258f-44e7-917a-00a68e8ee3fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.notice.field_notice_body
+    - node.type.notice
+  module:
+    - text
+    - user
+id: node.notice.default
+targetEntityType: node
+bundle: notice
+mode: default
+content:
+  field_notice_body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

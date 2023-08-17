@@ -1,0 +1,21 @@
+uuid: 7446e972-3f30-44aa-be6c-537b312fe9ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_subject
+    - paragraphs.paragraphs_type.stream
+id: paragraph.stream.field_subject
+field_name: field_subject
+entity_type: paragraph
+bundle: stream
+label: Subject
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings: {  }
+field_type: entity_reference

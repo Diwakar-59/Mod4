@@ -1,0 +1,8 @@
+uuid: 2d132d5e-186f-433d-9a67-7a6e62fb6cd0
+langcode: en
+status: true
+dependencies: {  }
+name: Subjects
+vid: subjects
+description: 'Subjects available'
+weight: 0

@@ -1,0 +1,33 @@
+uuid: fa22c3e0-a8a8-4221-9b8c-3ae0c387c5ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.login_signup
+    - field.field.block_content.login_signup.body
+  module:
+    - text
+id: block_content.login_signup.default
+targetEntityType: block_content
+bundle: login_signup
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 26
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

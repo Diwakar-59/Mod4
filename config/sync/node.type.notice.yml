@@ -1,0 +1,17 @@
+uuid: 704e8193-63f8-4e8e-aa72-d3455108369c
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Notice
+type: notice
+description: 'Add a new Notice'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

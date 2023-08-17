@@ -1,0 +1,21 @@
+uuid: 84a60a49-9ea1-4d1b-86a1-cdd8ec34cfb0
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.stream_block
+    - field.field.block_content.stream_block.field_streams
+id: block_content.stream_block.default
+targetEntityType: block_content
+bundle: stream_block
+mode: default
+content:
+  field_streams:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

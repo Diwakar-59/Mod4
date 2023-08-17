@@ -1,0 +1,21 @@
+uuid: 8d6d3370-c85b-4c84-bb54-c22808f8b9b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_passing_year
+  module:
+    - datetime
+    - user
+id: user.user.field_passing_year
+field_name: field_passing_year
+entity_type: user
+bundle: user
+label: 'Passing Year'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

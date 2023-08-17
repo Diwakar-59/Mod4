@@ -1,0 +1,22 @@
+uuid: 3a467374-9c9e-45ab-ae88-d6630858e13a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.login_signup
+    - field.field.block_content.login_signup.body
+  module:
+    - text
+id: block_content.login_signup.default
+targetEntityType: block_content
+bundle: login_signup
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -1,0 +1,36 @@
+uuid: 12d88b3d-a990-4f96-a295-a37986877a82
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stream.field_stream
+    - field.field.paragraph.stream.field_subject
+    - paragraphs.paragraphs_type.stream
+id: paragraph.stream.default
+targetEntityType: paragraph
+bundle: stream
+mode: default
+content:
+  field_stream:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_subject:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
