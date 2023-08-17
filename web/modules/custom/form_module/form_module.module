@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ *   Implementing the form changes of sign in and sign Up.
+ * Implements hooks.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function form_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'user_login_form') {
+    $form['name'] = [
+      '#type' => 'textfield',
+      '#title' => 'Full Name',
+      '#required' => TRUE,
+    ];
+    $form['email'] = [
+      '#type' => 'email',
+      '#title' => 'Email ID',
+      '#patterns' => ['*@gmail.com', '*@yahoo.com', '*@outlook.com'],
+      '#required' => TRUE,
+    ];
+
+    $form['#validate'][] = 'form_module_user_login_form_validate';
+  }
+
+  if ($form_id == 'user_register_form') {
+    // Add a custom validation handler for the mobile number field.
+    $form['#validate'][] = 'form_module_user_registration_form_validate';
+  }
+
+}
+
+/**
+ * Validation handler to login the user based on email and password.
+ *
+ * @param array $form
+ *   Form array containing the form fields.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Stores the current value entered by the user.
+ *
+ * @return void
+ */
+function form_module_user_login_form_validate(array &$form, FormStateInterface $form_state) {
+  // Fetch user by email.
+  $email = $form_state->getValue('email');
+  $accounts = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['mail' => $email]);
+  $account = reset($accounts);
+  $password = $form_state->getValue('pass');
+  $is_valid_password = \Drupal::service('password')->check($password, $account->getPassword());
+
+  // If both OTP and password verification are successful, log in the user.
+  if ($account && $is_valid_password) {
+    // $account = reset($account);
+    user_login_finalize($account);
+  }
+  else {
+    $form_state->setErrorByName('email', t('Invalid email, or Password.'));
+  }
+}
+
+/**
+ *
+ */
+function form_module_user_registration_form_validate(array &$form, FormStateInterface $form_state) {
+  $mobile_num = $form_state->getValue('field_mobile_number[0][value]');
+  if (!is_numeric((int) $mobile_num)) {
+    $form_state->setErrorByName(
+      'field_mobile_number', t('Enter a valid 10 digit number'));
+  }
+
+}

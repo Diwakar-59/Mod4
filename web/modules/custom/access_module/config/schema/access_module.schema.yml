@@ -1,0 +1,7 @@
+block.settings.access_module_access_module:
+  type: block_settings
+  label: 'Access Module block'
+  mapping:
+    foo:
+      type: string
+      label: Foo
