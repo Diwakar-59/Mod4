@@ -1,0 +1,24 @@
+uuid: 9295d1d6-8a2b-4f6e-87ea-43bdf4d3021f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.assets.field_for_stream
+    - field.field.node.assets.field_upload_asset
+    - node.type.assets
+  module:
+    - user
+id: node.assets.teaser
+targetEntityType: node
+bundle: assets
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_for_stream: true
+  field_upload_asset: true

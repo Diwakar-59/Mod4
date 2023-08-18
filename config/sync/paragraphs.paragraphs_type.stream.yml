@@ -1,0 +1,10 @@
+uuid: c98f8224-789a-45a1-a546-5b3306ed9f9f
+langcode: en
+status: true
+dependencies: {  }
+id: stream
+label: Stream
+icon_uuid: null
+icon_default: null
+description: 'Subject for stream'
+behavior_plugins: {  }

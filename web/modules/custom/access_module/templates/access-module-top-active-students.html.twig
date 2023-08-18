@@ -1,0 +1,8 @@
+<div class="top-active-students-block">
+  <h2 style="color: white;">{{ 'Top Active Students'|t }}</h2>
+  <ul>
+    {% for student in students %}
+      <li style="color: white;">{{ student.name }}</li>
+    {% endfor %}
+  </ul>
+</div>

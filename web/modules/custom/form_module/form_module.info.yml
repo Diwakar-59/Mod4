@@ -1,0 +1,5 @@
+name: Form Alter Module
+type: module
+description: My custom module for altering the login and sign up form.
+package: Custom Module
+core_version_requirement: ^10

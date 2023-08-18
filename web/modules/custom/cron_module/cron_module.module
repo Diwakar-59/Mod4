@@ -1,0 +1,58 @@
+<?php
+
+use Drupal\Core\Database\Connection;
+
+/**
+ * Implements hook_cron().
+ */
+function cron_module_cron() {
+  // Find and unpublish notices that are older than 1 day.
+  $unpublish_date = strtotime('-1 day'); 
+  $query = \Drupal::entityQuery('node');
+
+  $query->accessCheck(TRUE);
+
+  $query->condition('type', 'notice')
+    ->condition('status', 1) 
+    ->condition('created', $unpublish_date, '<');
+
+  $nids = $query->execute();
+
+  foreach ($nids as $nid) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+    $node->delete();
+    $node->save(); 
+  }
+
+  // Any student whose graduation is already 6 months old, then the student 
+  // records should be deleted from the portal.
+
+  // Calculate the date 6 months ago.
+  $six_months_ago = strtotime('-6 months');
+
+  // Query for students with graduation completion date older than 6 months.
+  // Get the database connection.
+  $database = \Drupal::database();
+
+  // Query for students with graduation completion date older than 6 months.
+
+  $query = $database->select('users_field_data', 'u');
+  $query->fields('u', ['uid']);
+  $query->condition('status', 1);
+  $query->join('user__roles', 'ur', 'u.uid = ur.entity_id'); // Join with user__roles table.
+  $query->condition('ur.roles_target_id', 'students'); // Filter by student role.
+  $query->join('user__field_passing_year', 'py', 'ur.entity_id = py.entity_id'); // Join with your custom table.
+  $query->condition('py.field_passing_year_value', $six_months_ago, '<');
+
+  $uids = $query->execute()->fetchCol();
+
+  foreach ($uids as $uid) {
+    $user = \Drupal\user\Entity\User::load($uid);
+    if ($user) {
+      $user->delete();
+      // Optionally, log a message for each deleted user.
+      \Drupal::logger('cron_module')->notice('Deleted user with ID: @uid', ['@uid' => $uid]);
+    }
+  }
+
+}

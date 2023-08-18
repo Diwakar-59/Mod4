@@ -1,0 +1,8 @@
+uuid: 76b5cad4-9257-48ad-905f-f0e5a18fd755
+langcode: en
+status: true
+dependencies: {  }
+id: stream_block
+label: 'Stream Block'
+revision: 0
+description: 'Link to stream page.'

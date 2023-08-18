@@ -1,0 +1,30 @@
+uuid: 1bed2f20-d262-452e-99a6-d7f578e3dbb5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stream.field_stream
+    - field.field.paragraph.stream.field_subject
+    - paragraphs.paragraphs_type.stream
+id: paragraph.stream.default
+targetEntityType: paragraph
+bundle: stream
+mode: default
+content:
+  field_stream:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_subject:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

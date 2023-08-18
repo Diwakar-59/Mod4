@@ -1,0 +1,29 @@
+uuid: 29faf7f9-c116-432e-ab39-64c9526e24b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_stream
+    - paragraphs.paragraphs_type.stream
+    - taxonomy.vocabulary.streams
+id: paragraph.stream.field_stream
+field_name: field_stream
+entity_type: paragraph
+bundle: stream
+label: Stream
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      streams: streams
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: cse
+field_type: entity_reference

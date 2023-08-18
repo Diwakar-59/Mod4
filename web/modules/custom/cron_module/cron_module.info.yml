@@ -1,0 +1,5 @@
+name: Cron Module
+type: module
+description: My custom cron module for deleting previous notices and students.
+package: Custom Module
+core_version_requirement: ^10

@@ -1,0 +1,22 @@
+uuid: e1f5da30-10cb-4c7c-a86d-a3dbebc791ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.notice.field_notice_body
+    - node.type.notice
+  module:
+    - user
+id: node.notice.teaser
+targetEntityType: node
+bundle: notice
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_notice_body: true

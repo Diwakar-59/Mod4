@@ -1,0 +1,38 @@
+uuid: 2c0bee97-6b0f-4841-9200-4bc9286b8555
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:login_signup:3acc1405-747d-4de9-a686-68005446039e'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - olivero
+id: olivero_loginsignup
+theme: olivero
+region: header
+weight: 0
+provider: null
+plugin: 'block_content:3acc1405-747d-4de9-a686-68005446039e'
+settings:
+  id: 'block_content:3acc1405-747d-4de9-a686-68005446039e'
+  label: Login/SignUp
+  label_display: visible
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /home
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous

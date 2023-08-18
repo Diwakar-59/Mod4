@@ -1,0 +1,38 @@
+uuid: 5911349a-6bbf-46aa-9fc0-ad9d6820a898
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:stream_block:f4142489-076b-4be1-b005-7c588d8c2f60'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - olivero
+id: olivero_linktostreams
+theme: olivero
+region: sidebar
+weight: 0
+provider: null
+plugin: 'block_content:f4142489-076b-4be1-b005-7c588d8c2f60'
+settings:
+  id: 'block_content:f4142489-076b-4be1-b005-7c588d8c2f60'
+  label: 'Link to streams'
+  label_display: visible
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /home
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      administrator: administrator
