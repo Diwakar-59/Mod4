@@ -7,22 +7,26 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_form_alter().
  */
 function form_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'user_login_form') {
-    $form['name'] = [
+    
+    $form['full_name'] = [
       '#type' => 'textfield',
       '#title' => 'Full Name',
-      '#required' => TRUE,
+      '#required' => FALSE,
+      '#weight' => -10,
     ];
     $form['email'] = [
       '#type' => 'email',
       '#title' => 'Email ID',
       '#patterns' => ['*@gmail.com', '*@yahoo.com', '*@outlook.com'],
       '#required' => TRUE,
+      '#weight' => -9,
     ];
 
     $form['#validate'][] = 'form_module_user_login_form_validate';
@@ -64,7 +68,13 @@ function form_module_user_login_form_validate(array &$form, FormStateInterface $
 }
 
 /**
+ * Function to validate the phone number field.
  *
+ * @param array $form
+ *   Stores the form fields.
+ * @param FormStateInterface $form_state
+ *   Form Data.
+ * @return void
  */
 function form_module_user_registration_form_validate(array &$form, FormStateInterface $form_state) {
   $mobile_num = $form_state->getValue('field_mobile_number[0][value]');
@@ -73,4 +83,16 @@ function form_module_user_registration_form_validate(array &$form, FormStateInte
       'field_mobile_number', t('Enter a valid 10 digit number'));
   }
 
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for user entities.
+ */
+function form_module_user_insert(UserInterface $user) {
+  // Check if the user does not have the "Student" role.
+  if (!$user->hasRole('student')) {
+    // Assign the "Student" role to the user.
+    $user->addRole('student');
+    $user->save();
+  }
 }

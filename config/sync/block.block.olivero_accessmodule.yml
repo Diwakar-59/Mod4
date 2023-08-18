@@ -1,4 +1,4 @@
-uuid: c1a0f48e-75db-49da-bd97-ca9a10dc80b2
+uuid: db9dbc4c-7e8e-418b-b042-148e638e0098
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
     - olivero
 id: olivero_accessmodule
 theme: olivero
-region: social
+region: content_below
 weight: 0
 provider: null
 plugin: access_module_access_module
@@ -19,7 +19,6 @@ settings:
   label: 'Access Module'
   label_display: visible
   provider: access_module
-  foo: 'Hello world!'
 visibility:
   request_path:
     id: request_path

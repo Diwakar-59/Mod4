@@ -13,6 +13,7 @@ module:
   config: 0
   contact: 0
   contextual: 0
+  cron_module: 0
   datetime: 0
   dblog: 0
   devel: 0
@@ -36,7 +37,10 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  registration_role: 0
+  rest: 0
   search: 0
+  serialization: 0
   shortcut: 0
   smtp: 0
   standard: 0

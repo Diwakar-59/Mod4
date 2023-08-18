@@ -3,6 +3,8 @@
 namespace Drupal\access_module\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\SessionManagerInterface;
@@ -28,6 +30,15 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
   protected $sessionManager;
 
   /**
+   * Stores the connection object.
+   *
+   * @var object
+   */
+  protected $connection;
+
+  protected $entity_manager;
+
+  /**
    * Constructs a new AccessModuleBlock instance.
    *
    * @param array $configuration
@@ -41,10 +52,16 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
    *   The plugin implementation definition.
    * @param \Drupal\Core\Session\SessionManagerInterface $session_manager
    *   The session_manager service.
+   * @param \Drupal\Core\Entity\EntityTypeManager $entity 
+   *   The entity type manager service.
+   * @param \Drupal\Core\Database\Connection $connection
+   *   The connection service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, SessionManagerInterface $session_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, SessionManagerInterface $session_manager, Connection $connection, EntityTypeManager $entity) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->sessionManager = $session_manager;
+    $this->connection = $connection;
+    $this->entity_manager = $entity;
   }
 
   /**
@@ -55,7 +72,9 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('session_manager')
+      $container->get('session_manager'),
+      $container->get('database'),
+      $container->get('entity_type.manager'),
     );
   }
 
@@ -67,25 +86,6 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
       'foo' => $this->t('Hello world!'),
     ];
   }
-
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // public function blockForm($form, FormStateInterface $form_state) {
-  //   $form['foo'] = [
-  //     '#type' => 'textarea',
-  //     '#title' => $this->t('Foo'),
-  //     '#default_value' => $this->configuration['foo'],
-  //   ];
-  //   return $form;
-  // }
-
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // public function blockSubmit($form, FormStateInterface $form_state) {
-  //   $this->configuration['foo'] = $form_state->getValue('foo');
-  // }
 
   /**
    * {@inheritdoc}
@@ -103,20 +103,27 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
     return $content;
   }
 
+  /**
+   * Queries the top 5 students based on access.
+   *
+   * @return array
+   *   Returns an array of students.
+   */
   protected function getTopActiveStudents() {
     // Query logged-in users with the "student" role.
-    $query = \Drupal::entityQuery('user')
-      ->condition('status', 1)
-      ->condition('roles', 'student')
-      ->sort('access', 'DESC')
-      ->range(0, 5);
+    $query = $this->connection->select('users_field_data', 'u');
+    $query->fields('u', ['uid']);
+    $query->condition('status', 1);
+    // Join with user__roles table.
+    $query->join('user__roles', 'ur', 'u.uid = ur.entity_id'); 
+    $query->condition('ur.roles_target_id', 'students');
+    $query->orderBy('access', 'DESC');
+    $query->range(0, 5);
       
-    $query->accessCheck(TRUE);
-
-    $uids = $query->execute();
+    $uids = $query->execute()->fetchCol();
 
     // Load user entities.
-    $users = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple($uids);
+    $users = $this->entity_manager->getStorage('user')->loadMultiple($uids);
 
     // Extract relevant data and return the result.
     $result = [];
@@ -125,7 +132,6 @@ class AccessModuleBlock extends BlockBase implements ContainerFactoryPluginInter
         'name' => $user->getDisplayName(),
       ];
     }
-
     return $result;
   }
 

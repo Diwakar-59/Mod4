@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.storage.user.field_stream
+    - system.menu.main
     - user.role.students
   module:
+    - datetime
     - user
 id: admin_dashboard
 label: 'Admin Dashboard'
@@ -254,7 +256,40 @@ display:
         options: {  }
       empty: {  }
       sorts: {  }
-      arguments: {  }
+      arguments:
+        field_joining_year_value_year:
+          id: field_joining_year_value_year
+          table: user__field_joining_year
+          field: field_joining_year_value_year
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime_year
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
       filters:
         status:
           id: status
@@ -310,33 +345,31 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-        created:
-          id: created
-          table: users_field_data
-          field: created
+        field_joining_year_value:
+          id: field_joining_year_value
+          table: user__field_joining_year
+          field: field_joining_year_value
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: user
-          entity_field: created
-          plugin_id: date
-          operator: '='
+          plugin_id: datetime
+          operator: '<='
           value:
             min: ''
             max: ''
             value: ''
-            type: offset
+            type: date
           group: 1
           exposed: true
           expose:
-            operator_id: created_op
-            label: Created
+            operator_id: field_joining_year_value_op
+            label: 'Joining Year (field_joining_year)'
             description: ''
             use_operator: false
-            operator: created_op
+            operator: field_joining_year_value_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: created
+            identifier: field_joining_year_value
             required: false
             remember: false
             multiple: false
@@ -352,16 +385,19 @@ display:
             placeholder: ''
           is_grouped: false
           group_info:
-            label: ''
-            description: ''
-            identifier: ''
+            label: 'Joining Year (field_joining_year)'
+            description: null
+            identifier: field_joining_year_value
             optional: true
             widget: select
             multiple: false
             remember: false
             default_group: All
             default_group_multiple: {  }
-            group_items: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
       style:
         type: table
         options:
@@ -444,7 +480,7 @@ display:
       display_extenders: {  }
       path: admin-dashboard
       menu:
-        type: tab
+        type: normal
         title: 'Admin Dashboard'
         description: ''
         weight: 0
